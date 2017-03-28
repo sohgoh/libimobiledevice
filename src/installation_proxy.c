@@ -369,6 +369,10 @@ static instproxy_error_t instproxy_receive_status_loop(instproxy_client_t client
 				status_name = NULL;
 				if (!bundle_identifier) {
 					debug_info("failed to retrieve name from status response with error %d.", res);
+					/* invoke status callback function */
+					if (status_cb) {
+						status_cb(command, node, user_data);
+					}
 					plist_free(node);
 					node = NULL;
 					break;
